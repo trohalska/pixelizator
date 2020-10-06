@@ -12,7 +12,8 @@ using servlets (Apache Tomcat 9) and algorithms
 
 ### Usage:
 ```
-
+1. git clone https://github.com/trohalska/pixelizator.git
+2. 
 ```
 
 ### Specification:

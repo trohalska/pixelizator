@@ -1,0 +1,48 @@
+body {
+    background-color: #e6e6ff;
+    padding: 15px;
+    font-family: Garamond, Geneva, sans-serif;
+}
+h1 {
+    color: #248f8f;
+    font-family: Garamond, Geneva, sans-serif;
+    font-size: 50px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid;
+    text-align: center;
+    /*text-transform: uppercase;*/
+    font-weight: bolder;
+}
+canvas {
+    border: 1px solid lightgray;
+    margin: 10px;
+    padding: 10px;
+}
+
+div {
+    margin: 10px;
+    padding: 0px;
+    color: #248f8f;
+    font-size: 25px;
+    font-weight: bold;
+}
+input {
+    margin: 10px;
+    padding: 10px 20px;
+    border: 2px solid #ff8533;
+    border-radius: 8px;
+    background-color: #ffd1b3;
+    font-size: 20px;
+    font-family: Garamond, Geneva, sans-serif;
+    text-transform: uppercase;
+    color: #248f8f;
+    font-weight: bolder;
+}
+input.load {
+    font-size: 16px;
+}
+input:hover {
+    background-color: pink;
+    color: red;
+}

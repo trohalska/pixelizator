@@ -6,19 +6,21 @@ let img4 = null;
 let img5 = null;
 let img6 = null;
 
-let canvas = document.getElementById("can");
+let canvas = document.getElementById("canvasInput");
 
-function upload() {
-    let fileInput = document.getElementById("finput");
-    img0 = new SimpleImage(fileInput);
-    img0.drawTo(canvas);
-    img1 = new SimpleImage(fileInput);
-    img2 = new SimpleImage(fileInput);
-    img3 = new SimpleImage(fileInput);
-    img4 = new SimpleImage(fileInput);
-    img5 = new SimpleImage(fileInput);
-    img6 = new SimpleImage(fileInput);
-}
+// function upload() {
+//     let fileInput = document.getElementById("finput");
+//
+//     img0 = new SimpleImage(fileInput);
+//     img0.drawTo(canvas);
+//
+//     img1 = new SimpleImage(fileInput);
+//     img2 = new SimpleImage(fileInput);
+//     img3 = new SimpleImage(fileInput);
+//     img4 = new SimpleImage(fileInput);
+//     img5 = new SimpleImage(fileInput);
+//     img6 = new SimpleImage(fileInput);
+// }
 function filter_gray() {
     if (check(img0)) {
         makeGray(img2);

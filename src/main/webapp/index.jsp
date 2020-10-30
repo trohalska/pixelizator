@@ -9,9 +9,8 @@
     <meta name="author" content="Tetiana Rohalska">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Pixelizator</title>
-    <link
-            href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900"
-            rel="stylesheet"/>
+<%--    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900"--%>
+<%--            rel="stylesheet"/>--%>
     <link rel="stylesheet" href="styles.css"/>
 </head>
 
@@ -20,28 +19,49 @@
 
 <h1>Pixelizator && Fun Filters</h1>
 
-<div>Load image
-    <input class="load" type="file" multiple="false" accept="image/*" id="finput" onchange="upload()"></div>
-
-<div>Choose filter
-    <input type="button" value="gray" onclick="filter_gray()">
-    <input type="button" value="red" onclick="filter_red()">
-    <input type="button" value="window" onclick="filter_window()">
-    <input type="button" value="rainbow" onclick="filter_rainbow()">
-    <input type="button" value="blur" onclick="filter_blur()">
+<div class="headers">Load image
+    <input class="load" type="file" multiple="false"
+           accept="image/*" id="fileInput" onchange="upload(this)">
+    <input type="button" value="clear" onclick="clear()">
 </div>
 
-<div>Reset or clear
-    <input type="button" value="Reset" onclick="resetCanvas()">
-    <input type="button" value="clear" onclick="clearCanvas()">
+
+<%--file info--%>
+<div class="info">
+    <p id="name"></p>
+    <p id="format"></p>
+    <p id="size"></p>
 </div>
 
-<br>
+<%--<div>--%>
+<%--    <label for="rectangle">rectangle</label>--%>
+<%--    <input type="radio" name="shape" id="rectangle" checked>--%>
+<%--    <label for="Triangle">triangle</label>--%>
+<%--    <input type="radio" name="shape" id="Triangle">--%>
+<%--</div>--%>
 
-<canvas id="can">
-</canvas>
-<script src="SimpleImage.js"></script>
-<script src="pixelizator.js"></script>
+<%--<div id="downloads">--%>
+<%--    <p>Download</p>--%>
+<%--    <button id="download1">png</button>--%>
+<%--    <button id="download2">jpeg</button>--%>
+<%--    <button id="download3">webp</button>--%>
+<%--</div>--%>
+
+<%--<div>Choose filter--%>
+<%--    <input type="button" value="gray" onclick="filter_gray()">--%>
+<%--    <input type="button" value="red" onclick="filter_red()">--%>
+<%--    <input type="button" value="window" onclick="filter_window()">--%>
+<%--    <input type="button" value="rainbow" onclick="filter_rainbow()">--%>
+<%--    <input type="button" value="blur" onclick="filter_blur()">--%>
+<%--</div>--%>
+
+<%--<br>--%>
+
+<div class="imgBox">
+    <img class="images" id="inputImg" src="#" alt="input image">
+    <img class="images" id="resultImg" src="#" alt="result image">
+</div>
+<script src="readInput.js"></script>
 
 </body>
 

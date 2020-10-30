@@ -20,3 +20,16 @@ using servlets (Apache Tomcat 9) and algorithms
 
 
 ![view game]()
+
+
+### installation
+```
+> brew install mysql
+> mysql_secure_installation
+```
+### usage:
+```
+> mysql.server restart
+> mysql.server start
+> mysql.server stop
+```

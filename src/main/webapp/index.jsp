@@ -19,18 +19,20 @@
 
 <h1>Pixelizator && Fun Filters</h1>
 
-<div class="headers">Load image
-    <input class="load" type="file" multiple="false"
-           accept="image/*" id="fileInput" onchange="upload(this)">
-    <input type="button" value="clear" onclick="clear()">
+<div>
+    <label class="headers">Load image</label>
+    <input id="inputFile" class="buttons" type="file" multiple="false"
+           accept="image/*" onchange="upload(this)">
+    <input id="fileClear" class="buttons" type="button" value="clear">
 </div>
 
-
 <%--file info--%>
-<div class="info">
-    <p id="name"></p>
-    <p id="format"></p>
-    <p id="size"></p>
+<div>
+    <label class="headers">Change image</label>
+    <input type="range" class="choice" id="pixRange" min="1" max="100" value="10">
+    <label>Block size(px):</label>
+    <label id="outNumber">x10</label>
+    <input id="pixelize" class="buttons" type="button" value="pixelize">
 </div>
 
 <%--<div>--%>
@@ -40,12 +42,14 @@
 <%--    <input type="radio" name="shape" id="Triangle">--%>
 <%--</div>--%>
 
-<%--<div id="downloads">--%>
-<%--    <p>Download</p>--%>
-<%--    <button id="download1">png</button>--%>
-<%--    <button id="download2">jpeg</button>--%>
-<%--    <button id="download3">webp</button>--%>
-<%--</div>--%>
+<div>
+    <label class="headers">Download image</label>
+    <input class="download" type="button" value="png">
+    <input class="download" type="button" value="jpg">
+    <input class="download" type="button" value="webp">
+    <input class="download" type="button" value="bmp">
+    <input class="download" type="button" value="tiff">
+</div>
 
 <%--<div>Choose filter--%>
 <%--    <input type="button" value="gray" onclick="filter_gray()">--%>
@@ -55,14 +59,25 @@
 <%--    <input type="button" value="blur" onclick="filter_blur()">--%>
 <%--</div>--%>
 
-<%--<br>--%>
+<br>
 
 <div class="imgBox">
-    <img class="images" id="inputImg" src="#" alt="input image">
-    <img class="images" id="resultImg" src="#" alt="result image">
+    <div class="images">
+        <img id="inputImg" src="#" alt="input image">
+    </div>
+    <div class="images">
+        <img id="resultImg" src="#" alt="result image">
+    </div>
 </div>
+
+<div class="info">
+    <p id="name"></p>
+    <p id="format"></p>
+    <p id="size"></p>
+    <p id="resolution"></p>
+</div>
+
 <script src="readInput.js"></script>
 
 </body>
-
 </html>

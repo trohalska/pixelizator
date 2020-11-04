@@ -61,9 +61,9 @@
                 <version>2.2</version>
                 <configuration>
                     <uriEncoding>UTF-8</uriEncoding>
-                    <path>/</path>
-                    <port>8088</port>
-                    <update>true</update>
+<!--                    <path>/</path>-->
+                    <port>8080</port>
+<!--                    <update>true</update>-->
                 </configuration>
             </plugin>
 

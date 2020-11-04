@@ -4,48 +4,13 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+<!--    <servlet>-->
+<!--        <servlet-name>Pixelizator</servlet-name>-->
+<!--        <servlet-class>world.ucode.Pixelizator</servlet-class>-->
+<!--    </servlet>-->
 
-    <servlet>
-        <servlet-name>SimpleServlet</servlet-name>
-        <servlet-class>world.ucode.SimpleServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>StatusCodeDemo</servlet-name>
-        <servlet-class>world.ucode.StatusCodeDemo</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Pixelizator</servlet-name>
-        <servlet-class>world.ucode.Pixelizator</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DB2</servlet-name>
-        <servlet-class>world.ucode.DB2</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UploadImage</servlet-name>
-        <servlet-class>world.ucode.UploadImage</servlet-class>
-    </servlet>
-
-
-    <servlet-mapping>
-        <servlet-name>SimpleServlet</servlet-name>
-        <url-pattern>/SimpleServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>StatusCodeDemo</servlet-name>
-        <url-pattern>/StatusCodeDemo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Pixelizator</servlet-name>
-        <url-pattern>/Pixelizator</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DB2</servlet-name>
-        <url-pattern>/DB2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UploadImage</servlet-name>
-        <url-pattern>/UploadImage</url-pattern>
-    </servlet-mapping>
-
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Pixelizator</servlet-name>-->
+<!--        <url-pattern>/Pixelizator</url-pattern>-->
+<!--    </servlet-mapping>-->
 </web-app>

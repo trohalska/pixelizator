@@ -1,39 +1,153 @@
 let name = document.getElementById("name");
 let size = document.getElementById("size");
 let format = document.getElementById("format");
+let resolution = document.getElementById("resolution");
+let inputFile = document.getElementById("inputFile");
 let inputImg = document.getElementById("inputImg");
 let resultImg = document.getElementById("resultImg");
+let pixelize = document.getElementById("pixelize");
+let fname = '';
+let valid = true;
 
-function upload(input) {
+/**
+ * Load
+ */
+
+function upload(target) {
     clear();
-    let img = input.files[0];
+    if (target.files &&
+        target.files.length > 0 &&
+        target.files[0] &&
+        target.files[0].size > 0 &&
+        inputFile.value !== '') {
 
-    if (input.files && img) {
-
+        let img = target.files[0];
         let reader = new FileReader();
-        reader.onloadend = function (e) {
-            let image = document.getElementById("inputImg");
-            image.src = reader.result;
-            image.style.display = 'block'
+        reader.onloadend = function (event) {
+            inputImg.src = reader.result;
+            inputImg.style.display = 'block';
         };
         reader.readAsDataURL(img);
 
-        name.textContent = `name: ${img.name}`;
-        format.textContent = `format: ${img.type}`
-        size.textContent = `size: ${(img.size / 1000 / 1000).toString()
-            .slice(0, (img.size / 1000 / 1000).toString().indexOf('.') + 3)}MB`;
+        name.textContent = `name: ${fname = img.name}`;
+        format.textContent = `format: ${img.type}`;
+        setSize(target);
+        // setTimeout(setResolution, 100);
+    } else {
+        alert("Invalid file");
+        // inputFile.nodeValue = null;
+        valid = false;
     }
 }
+function setSize(input) {
+    let totalBytes = input.files[0].size;
+    let res;
 
+    if (totalBytes < 1000000)
+        res = `${(totalBytes / 1000).toFixed(2)} KB`;
+    else
+        res = `${(totalBytes / 1000000).toFixed(2)} MB`;
+    size.textContent = `size: ${res}`;
+}
+
+function setResolution() {
+    resolution.textContent = `resolution: ${inputImg.clientHeight} x ${inputImg.clientWidth}`;
+}
+
+document.getElementById("fileClear").addEventListener('click',  clear);
 function clear() {
-    console.log("clear");
+    // console.log("clear");
+    fname = '';
     name.textContent = '';
     size.textContent = '';
     format.textContent = '';
+    resolution.textContent = '';
+    // document.getElementById('inputFile').setAttribute('name', '');
     inputImg.src = '#';
     inputImg.style.display = 'none';
     resultImg.src = '#';
     resultImg.style.display = 'none';
-
 }
+
+/**
+ * Change
+ */
+
+document.getElementById("pixRange").addEventListener('click', function () {
+    document.getElementById("outNumber").textContent = 'x' + document.getElementById("pixRange").value;
+});
+
+/**
+ * Download
+ */
+
+document.querySelectorAll('.download').forEach(
+    item => item.addEventListener('click', function () {
+        download(item.getAttribute('value'));
+    })
+);
+function download(name) {
+    if (document.getElementById("resultImg").src !== 'http://localhost:8080/pixelizator/'
+    && fname !== '') {
+        let tag = document.createElement('a');
+        let newName = fname.substr(0, fname.lastIndexOf(".", fname.length))
+                    + '_pix.' + name;
+
+        tag.setAttribute('download', newName);
+        tag.setAttribute('href', document.getElementById("resultImg").src);
+        tag.click();
+        tag.remove();
+    } else {
+        alert('No image to download');
+    }
+}
+/**
+ * Server request
+ */
+pixelize.addEventListener('click', async function () {
+    if (valid) {
+        let img = inputFile.files[0];
+        let pixRange = document.getElementById('pixRange').value;
+        let formData = new FormData();
+
+        if (img != 0) {
+            formData.append('file', img);
+            formData.set('pixRange', pixRange);
+            formData.set('type', fname.substr(fname.lastIndexOf(".", fname.length) + 1));
+
+            let response = await fetch('http://localhost:8080/pixelizator/pix',{
+                method: 'POST',
+                body: formData,
+                enctype: 'multipart/form-data'
+            });
+
+            if (response.ok) {
+                let blob = await response.blob();
+                let reader = new FileReader();
+                reader.onloadend = function(event){
+                    resultImg.src = event.target.result;
+                    resultImg.style.display = 'block';
+                    // document.getElementById("download1").href = event.target.result;
+                };
+                reader.readAsDataURL(blob);
+            } else {
+                alert("Error in server post method");
+            }
+        } else {
+            alert('Invalid image for pixelization');
+        }
+    } else {
+        alert('Choose image for pixelization');
+    }
+});
+
+// let algoType = getAlgoType();
+// let shape = 0;
+// if (document.getElementById("Triangle").checked === true) {
+//     shape = 1;
+// }
+
+
+
+
 

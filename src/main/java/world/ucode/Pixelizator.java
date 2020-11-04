@@ -1,12 +1,18 @@
 package world.ucode;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.http.Part;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,49 +21,42 @@ import java.sql.SQLException;
  *
  * @author trohalska
  */
+@MultipartConfig
+@WebServlet("/pix")
 public class Pixelizator extends HttpServlet {
-//    private String responseTemplate = "<html>\n<body>\n<h2>Hello from Simple Servlet trololo</h2>\n</body>\n</html>";
-//    private String message = "This is simple servlet message";
 
-    public void init() throws ServletException {
-//        File base = new File("src/com/example/view");
-//        context = tomcat.addContext("", base.getAbsolutePath());
-//        tomcat.addWebapp(null, "/", base.getAbsolutePath());
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
 
-//        this.process(request, response);
-
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-//        out.println("Included HTML:");
-        request.getRequestDispatcher("/index.jsp").include(request, response);
-        out.close();
-
-//        response.setContentType("text/html");
-//        PrintWriter messageWriter = response.getWriter();
-//        messageWriter.println("<h1>" + message + "<h1>");
-
+        resp.setStatus(200);
+        resp.setContentType("image");
+        this.process(req, resp);
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        this.process(request, response);
-//    }
-//
-//    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        response.setStatus(200);
-//        response.getWriter().write(responseTemplate);
-//    }
+    private void process(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
 
-    public void service() {
+        // get all from FormData
+        int pixel = Integer.parseInt(req.getParameter("pixRange"));
+        String type = req.getParameter("type");
+        Part filePart = req.getPart("file");
 
+        // get & process file
+        BufferedImage image = ImageIO.read(filePart.getInputStream());
+
+        Filters.filterRed(image, pixel);
+
+        ImageIO.write(image, type, resp.getOutputStream());
     }
-    public void destroy() {
-
-    }
-
 }

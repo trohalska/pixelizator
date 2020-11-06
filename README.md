@@ -2,7 +2,7 @@
 
 ### Description:
 Ucode project: develop web-app Pixelizator.
-This web-app that allows you pixelating images, apply different filters and download results.
+It allows you to pixelate images, apply different filters and download results.
 
 ### Implementation:
 - Front-End - HTML/CSS/JavaScript
@@ -22,4 +22,8 @@ This web-app that allows you pixelating images, apply different filters and down
 ```
 
 ### Specification:
-![view game]()
+![view game](https://raw.githubusercontent.com/trohalska/pixelizator/main/src/main/resources/pix01.png)
+![view game](https://raw.githubusercontent.com/trohalska/pixelizator/main/src/main/resources/pix02.png)
+![view game](https://raw.githubusercontent.com/trohalska/pixelizator/main/src/main/resources/pix03.png)
+![view game](https://raw.githubusercontent.com/trohalska/pixelizator/main/src/main/resources/pix04.png)
+![view game](https://raw.githubusercontent.com/trohalska/pixelizator/main/src/main/resources/pix05.png)

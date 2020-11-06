@@ -1,18 +1,17 @@
-let name = document.getElementById("name");
-let size = document.getElementById("size");
-let format = document.getElementById("format");
-let resolution = document.getElementById("resolution");
-let inputFile = document.getElementById("inputFile");
-let inputImg = document.getElementById("inputImg");
-let resultImg = document.getElementById("resultImg");
-let pixelize = document.getElementById("pixelize");
+let name = document.getElementById('name');
+let size = document.getElementById('size');
+let format = document.getElementById('format');
+let resolution = document.getElementById('resolution');
+let inputFile = document.getElementById('inputFile');
+let inputImg = document.getElementById('inputImg');
+let resultImg = document.getElementById('resultImg');
+let pixelize = document.getElementById('pixelize');
 let fname = '';
 let valid = true;
 
 /**
- * Load
+ * ----------------------------- Load
  */
-
 function upload(target) {
     clear();
     if (target.files &&
@@ -23,7 +22,7 @@ function upload(target) {
 
         let img = target.files[0];
         let reader = new FileReader();
-        reader.onloadend = function (event) {
+        reader.onloadend = function () {
             inputImg.src = reader.result;
             inputImg.style.display = 'block';
         };
@@ -32,10 +31,8 @@ function upload(target) {
         name.textContent = `name: ${fname = img.name}`;
         format.textContent = `format: ${img.type}`;
         setSize(target);
-        // setTimeout(setResolution, 100);
+        setTimeout(setResolution, 100);
     } else {
-        alert("Invalid file");
-        // inputFile.nodeValue = null;
         valid = false;
     }
 }
@@ -51,18 +48,20 @@ function setSize(input) {
 }
 
 function setResolution() {
-    resolution.textContent = `resolution: ${inputImg.clientHeight} x ${inputImg.clientWidth}`;
+    resolution.textContent = `resolution: ${inputImg.naturalWidth} x ${inputImg.naturalHeight}`;
 }
 
-document.getElementById("fileClear").addEventListener('click',  clear);
+/**
+ * ----------------------------- Clear
+ */
+document.getElementById('fileClear').addEventListener('click',  clear);
+
 function clear() {
-    // console.log("clear");
     fname = '';
     name.textContent = '';
     size.textContent = '';
     format.textContent = '';
     resolution.textContent = '';
-    // document.getElementById('inputFile').setAttribute('name', '');
     inputImg.src = '#';
     inputImg.style.display = 'none';
     resultImg.src = '#';
@@ -70,39 +69,39 @@ function clear() {
 }
 
 /**
- * Change
+ * ----------------------------- Range
  */
-
-document.getElementById("pixRange").addEventListener('click', function () {
-    document.getElementById("outNumber").textContent = 'x' + document.getElementById("pixRange").value;
+document.getElementById('pixRange').addEventListener('click', function () {
+    document.getElementById('outNumber').textContent =
+        'x' + document.getElementById('pixRange').value;
 });
 
 /**
- * Download
+ * ----------------------------- Download
  */
-
 document.querySelectorAll('.download').forEach(
     item => item.addEventListener('click', function () {
         download(item.getAttribute('value'));
     })
 );
 function download(name) {
-    if (document.getElementById("resultImg").src !== 'http://localhost:8080/pixelizator/'
+    if (document.getElementById('resultImg').src !== 'http://localhost:8080/pixelizator/'
     && fname !== '') {
         let tag = document.createElement('a');
-        let newName = fname.substr(0, fname.lastIndexOf(".", fname.length))
+        let newName = fname.substr(0, fname.lastIndexOf('.', fname.length))
                     + '_pix.' + name;
 
         tag.setAttribute('download', newName);
-        tag.setAttribute('href', document.getElementById("resultImg").src);
+        tag.setAttribute('href', document.getElementById('resultImg').src);
         tag.click();
         tag.remove();
     } else {
         alert('No image to download');
     }
 }
+
 /**
- * Server request
+ * ----------------------------- Server request
  */
 pixelize.addEventListener('click', async function () {
     if (valid) {
@@ -110,10 +109,13 @@ pixelize.addEventListener('click', async function () {
         let pixRange = document.getElementById('pixRange').value;
         let formData = new FormData();
 
-        if (img != 0) {
+        if (img !== 0) {
             formData.append('file', img);
+            formData.set('fileName', fname);
             formData.set('pixRange', pixRange);
-            formData.set('type', fname.substr(fname.lastIndexOf(".", fname.length) + 1));
+            formData.set('type', fname.substr(fname.lastIndexOf('.', fname.length) + 1));
+            formData.set('algorithm', document.querySelector('input[name="algorithms"]:checked').value);
+            formData.set('filter', document.querySelector('input[name="filters"]:checked').value);
 
             let response = await fetch('http://localhost:8080/pixelizator/pix',{
                 method: 'POST',
@@ -127,25 +129,19 @@ pixelize.addEventListener('click', async function () {
                 reader.onloadend = function(event){
                     resultImg.src = event.target.result;
                     resultImg.style.display = 'block';
-                    // document.getElementById("download1").href = event.target.result;
                 };
                 reader.readAsDataURL(blob);
             } else {
-                alert("Error in server post method");
+                alert('Error in server post method');
             }
         } else {
             alert('Invalid image for pixelization');
         }
     } else {
-        alert('Choose image for pixelization');
+        alert('Choose valid image for pixelization');
     }
 });
 
-// let algoType = getAlgoType();
-// let shape = 0;
-// if (document.getElementById("Triangle").checked === true) {
-//     shape = 1;
-// }
 
 
 

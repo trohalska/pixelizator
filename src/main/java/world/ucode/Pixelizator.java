@@ -2,7 +2,6 @@ package world.ucode;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -10,12 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 /**
  * Simple class that extends {@link HttpServlet}.
  *
@@ -48,15 +44,32 @@ public class Pixelizator extends HttpServlet {
             throws IOException, ServletException {
 
         // get all from FormData
+        Part filePart = req.getPart("file");
         int pixel = Integer.parseInt(req.getParameter("pixRange"));
         String type = req.getParameter("type");
-        Part filePart = req.getPart("file");
+        int algo = Integer.parseInt(req.getParameter("algorithm"));
+        int filter = Integer.parseInt(req.getParameter("filter"));
 
         // get & process file
         BufferedImage image = ImageIO.read(filePart.getInputStream());
 
-        Filters.filterRed(image, pixel);
+        Filters.applyFilters(image, filter);
+        Algorithms.applyAlgorithms(image, pixel, algo);
 
         ImageIO.write(image, type, resp.getOutputStream());
+
+        // database
+        writeIntoDB(req);
     }
+
+    private void writeIntoDB(HttpServletRequest req) {
+        String[] reqDB = new String[4];
+        reqDB[0] = req.getParameter("fileName");
+        reqDB[1] = req.getParameter("pixRange");
+        reqDB[2] = Algorithms.getAlgorithm(Integer.parseInt(req.getParameter("algorithm")));
+        reqDB[3] = Filters.getFilter(Integer.parseInt(req.getParameter("filter")));
+
+        RequestDB.insert(reqDB);
+    }
+
 }

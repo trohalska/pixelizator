@@ -8,9 +8,15 @@ import java.awt.image.WritableRaster;
 public class Algorithms {
     public static void applyAlgorithms(BufferedImage image, int pixel, int num) {
         switch (num) {
-            case 0 -> rectangle(image, pixel);
-            case 1 -> triangle(image, pixel);
-            default -> System.out.println("Invalid algorithms type");
+            case 0: {
+                rectangle(image, pixel);
+                break;
+            }
+            case 1: {
+                triangle(image, pixel);
+                break;
+            }
+            default: System.out.println("Invalid algorithms type");
         }
     }
 

@@ -21,14 +21,14 @@ public class Filters {
     }
 
     public static String getFilter(int num) {
-        return (switch (num) {
-            case 0 -> "none";
-            case 1 -> "gray";
-            case 2 -> "red";
-            case 3 -> "window";
-            case 4 -> "rainbow";
-            default -> "unknown";
-        });
+        switch (num) {
+            case 0: return "none";
+            case 1: return "gray";
+            case 2: return "red";
+            case 3: return "window";
+            case 4: return "rainbow";
+            default: return "unknown";
+        }
     }
 
     private static void gray(BufferedImage image) {
@@ -62,8 +62,7 @@ public class Filters {
 
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
-                Color c = new Color(image.getRGB(x, y));
-                Color newPixel = c;
+                Color newPixel = new Color(image.getRGB(x, y));
 
                 if (x <= 10 || x >= w - 10 || y <= 10 || y >= h - 10) {
                     newPixel = new Color(102, 51, 0);
